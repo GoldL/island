@@ -1,39 +1,50 @@
-# island
+## `island`(基于`Node.js Koa2`开发微信小程序服务端)
+------
 
-#### 介绍
-{**以下是码云平台说明，您可以替换此简介**
-码云是 OSCHINA 推出的基于 Git 的代码托管平台（同时支持 SVN）。专为开发者提供稳定、高效、安全的云端软件开发协作平台
-无论是个人、团队、或是企业，都能够用码云实现代码托管、项目管理、协作开发。企业项目请看 [https://gitee.com/enterprises](https://gitee.com/enterprises)}
+#### 概述
+  项目是基于`Node.js Koa2`开发微信小程序服务端，来源于imooc的实战课程[《纯正商业级应用 Node.js Koa2开发微信小程序服务端》](https://coding.imooc.com/learn/list/342.html)，自己动手实践并加以拓展，仅供自己学习使用。
+  项目的大致流程是`Node.js Koa2`构建开发环境，分析需求，设计构思，规划目录结构，开始编程。
 
-#### 软件架构
-软件架构说明
+#### 技术栈
+  - [x] `Node.js`
+  - [x] `Koa2`
+  - [x] `Sequelize`
+  - [x] `requireDirectory`
+  - [x] `Koa-router`
+  - [x] `LinValidator`
 
+#### 知识点
+  - 深入JS异常处理与异步异常
+  - 异步异常链与全局异常处理
+  - 深入Koa中间件
+  - Sequelize Scope应用
+  - 理解Node.js在Web架构中的作用
+  - Koa开发API
+  - requireDirectory自动路由加载
+  - LinValidator校验器
+  - Koa开发微信小程序用户系统
+  - 权限控制中间件
+  - PM2部署Node.js应用
+#### 笔记
+  > 项目里note.md
 
-#### 安装教程
+#### 效果
 
-1. xxxx
-2. xxxx
-3. xxxx
+#### 构建
 
-#### 使用说明
+``` bash
+# install dependencies
+npm install
 
-1. xxxx
-2. xxxx
-3. xxxx
+# serve with hot reload at localhost:8080
+npm run dev
 
-#### 参与贡献
+# build for production with minification
+npm run build
 
-1. Fork 本仓库
-2. 新建 Feat_xxx 分支
-3. 提交代码
-4. 新建 Pull Request
+# build for production and view the bundle analyzer report
+npm run build --report
+```
 
-
-#### 码云特技
-
-1. 使用 Readme\_XXX.md 来支持不同的语言，例如 Readme\_en.md, Readme\_zh.md
-2. 码云官方博客 [blog.gitee.com](https://blog.gitee.com)
-3. 你可以 [https://gitee.com/explore](https://gitee.com/explore) 这个地址来了解码云上的优秀开源项目
-4. [GVP](https://gitee.com/gvp) 全称是码云最有价值开源项目，是码云综合评定出的优秀开源项目
-5. 码云官方提供的使用手册 [https://gitee.com/help](https://gitee.com/help)
-6. 码云封面人物是一档用来展示码云会员风采的栏目 [https://gitee.com/gitee-stars/](https://gitee.com/gitee-stars/)
+#### 总结
+  项目难度4星，高质量的构建后端`Node.js koa2`的后端框架架构。共勉~
