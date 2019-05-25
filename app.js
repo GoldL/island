@@ -1,17 +1,8 @@
 const Koa = require('koa')
-const requireDirectory = require('require-directory')
-const Router = require('koa-router')
+const InitManager = require('./core/init')
 
 const app = new Koa()
 
-requireDirectory(module, './app/api/v1', {
-  visit: whenLoadModule
-})
-
-function whenLoadModule(obj) {
-  if (obj instanceof Router) {
-    app.use(obj.routes())
-  }
-}
+InitManager.initCore(app)
 
 app.listen(3000)
