@@ -6,6 +6,9 @@ const catchError = async (ctx, next) => {
   try {
     await next()
   } catch (error) {
+    if (global.config.environment === 'env') {
+      throw error
+    }
     if (error instanceof HttpException) {
       ctx.body = {
         msg: error.msg,

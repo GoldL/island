@@ -86,3 +86,33 @@ const catchError = async (ctx, next) => {
 module.exports = catchError
 
 ```
+##### 6. [`lin-validator`](http://doc.cms.7yue.pro/lin/server/koa/validator.html#%E7%B1%BB%E6%A0%A1%E9%AA%8C)
+```
+// validator.js ---声明
+const {
+  Rule,
+  LinValidator
+} = require('../../core/lin-validator')
+
+class PositiveIntegerValidator extends LinValidator {
+  constructor() {
+    super()
+    this.id = [
+      new Rule('isInt', '需要传入正整数', {
+        min: 1
+      })
+    ]
+  }
+}
+
+module.exports = {
+  PositiveIntegerValidator
+}
+
+// api ---调用
+const {
+  PositiveIntegerValidator
+} = require('../../validators/validator')
+const v = new PositiveIntegerValidator().validate(ctx)
+  const id = v.get('path.id')
+```
