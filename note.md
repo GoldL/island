@@ -116,3 +116,68 @@ const {
 const v = new PositiveIntegerValidator().validate(ctx)
   const id = v.get('path.id')
 ```
+##### 7. [`sequelize`](https://github.com/demopark/sequelize-docs-Zh-CN) 操作数据库
+```
+// 1.npm i mysql2 ---下载依赖
+// 2.db.js ---创建数据库
+const Sequelize = require('sequelize')
+const {
+  dbName,
+    host,
+    port,
+    user,
+    password
+} = require('../config/config').database
+
+const sequelize = new Sequelize(dbName, user, password, {
+  dialect: 'mysql',
+  host,
+  port,
+  timezone: '+08:00',
+  define: {
+    paranoid: true, // 不删除数据库条目,但将新添加的属性deletedAt设置为当前日期(删除完成时)
+    underscored: true, // 将自动设置所有属性的字段参数为下划线命名方式
+  }
+})
+
+sequelize.sync(
+  // {
+  //   force: true // 自动删除原来表，重新创建新的表
+  // }
+)
+
+module.exports = {
+  sequelize
+}
+
+// 3. user.js ---创建模型 
+const {
+  Sequelize,
+  Model
+} = require('sequelize')
+
+const {
+  sequelize
+} = require('../../core/db')
+
+class User extends Model {}
+
+User.init({
+  id: {
+    type: Sequelize.INTEGER,
+    primaryKey: true, // 主键
+    autoIncrement: true // 自动增长
+  },
+  nickname: Sequelize.STRING,
+  email: Sequelize.STRING,
+  password: Sequelize.STRING,
+  openid: {
+    type: Sequelize.STRING(64),
+    unique: true // 唯一性
+  }
+}, {
+  sequelize,
+  tableName: 'user' // 重命名
+})
+
+```
