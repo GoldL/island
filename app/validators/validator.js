@@ -3,7 +3,13 @@ const {
   LinValidator
 } = require('../../core/lin-validator-v2')
 
-const { User } = require('../model/user')
+const {
+  User
+} = require('../model/user')
+
+const { 
+  LoginType
+} = require('../lib/enum')
 class PositiveIntegerValidator extends LinValidator {
   constructor() {
     super()
@@ -16,28 +22,28 @@ class PositiveIntegerValidator extends LinValidator {
 }
 
 class RegisterValidator extends LinValidator {
-  constructor () {
+  constructor() {
     super()
     this.email = [
-      new Rule('isEmail', '电子邮箱不符合规范，请输入正确的邮箱')
-    ],
-    this.password1 = [
-      new Rule('isLength', '密码至少6个字符，最多32个字符', {
-        min: 6,
-        max: 32
-      }),
-      new Rule('matches', '密码不符合规范', "^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?![,\.#%'\+\*\-:;^_`]+$)[,\.#%'\+\*\-:;^_`0-9A-Za-z]{6,20}$")
-    ],
-    this.password2 = this.password1,
-    this.nickname = [
-      new Rule('isLength', '昵称不符合长度规范', {
-        min: 4,
-        max: 32
-      }),
-    ]
+        new Rule('isEmail', '电子邮箱不符合规范，请输入正确的邮箱')
+      ],
+      this.password1 = [
+        new Rule('isLength', '密码至少6个字符，最多32个字符', {
+          min: 6,
+          max: 32
+        }),
+        new Rule('matches', '密码不符合规范', "^(?![0-9]+$)(?![a-z]+$)(?![A-Z]+$)(?![,\.#%'\+\*\-:;^_`]+$)[,\.#%'\+\*\-:;^_`0-9A-Za-z]{6,20}$")
+      ],
+      this.password2 = this.password1,
+      this.nickname = [
+        new Rule('isLength', '昵称不符合长度规范', {
+          min: 4,
+          max: 32
+        }),
+      ]
   }
 
-  validatePassword (vals) {
+  validatePassword(vals) {
     const password1 = vals.body.password1
     const password2 = vals.body.password2
     if (password1 !== password2) {
@@ -45,21 +51,50 @@ class RegisterValidator extends LinValidator {
     }
   }
 
-  async validateEmail (vals) {
+  async validateEmail(vals) {
     const email = vals.body.email
     const user = await User.findOne({
       where: {
         email
       }
     })
-    
+
     if (user) {
       throw new Error('邮箱已存在')
     }
   }
 }
 
+class TokenValidator extends LinValidator {
+  constructor() {
+    super()
+    this.account = [
+      new Rule('isLength', '账号长度不符合规范', {
+        min: 4,
+        max: 32
+      })
+    ],
+    this.secret = [
+      new Rule('isOptional'),
+      new Rule('isLength', '至少6个字符', {
+        min: 6,
+        max: 128
+      })
+    ]
+  }
+
+  validateLoginType(vals) {
+    if (!vals.body.type) {
+      throw new Error('type是必传参数')
+    }
+    if (!LoginType.isThisType(vals.body.type)) {
+      throw new Error('type参数不合法')
+    }
+  }
+}
+
 module.exports = {
   PositiveIntegerValidator,
-  RegisterValidator
+  RegisterValidator,
+  TokenValidator
 }

@@ -7,10 +7,10 @@ const { success } = require('../../lib/helper')
 const { RegisterValidator } = require('../../validators/validator')
 
 const router = new Router({
-  prefix: '/v1/user/'
+  prefix: '/v1/user'
 })
 
-router.post('register', async (ctx, next) => {
+router.post('/register', async (ctx, next) => {
   const v = await new RegisterValidator().validate(ctx)
   const user = {
     email: v.get('body.email'),
