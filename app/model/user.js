@@ -26,3 +26,7 @@ User.init({
   sequelize,
   tableName: 'user' // 重命名
 })
+
+module.exports = {
+  User
+}
