@@ -16,7 +16,10 @@ User.init({
     autoIncrement: true // 自动增长
   },
   nickname: Sequelize.STRING,
-  email: Sequelize.STRING,
+  email: {
+    type: Sequelize.STRING(128),
+    unique: true // 唯一性
+  },
   password: Sequelize.STRING,
   openid: {
     type: Sequelize.STRING(64),
