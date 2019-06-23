@@ -203,3 +203,31 @@ const bcrypt = require('bcryptjs')
 const salt = bcrypt.genSaltSync(10)
 const pwd = bcrypt.hashSync(v.get('body.password2'), salt)
 ```
+##### 9.js伪枚举类型
+```
+// enum.js
+function isThisType(val) {
+  for (let key in this) {
+    if (this[key] === val) {
+      return true
+    }
+  }
+  return false
+}
+
+const LoginType = {
+  USER_MINI_PROGRAM: 100,
+  USER_EMAIL: 101,
+  USER_MOBILE: 102,
+  ADMIN_EMAIL: 200,
+  isThisType
+}
+
+module.exports = {
+  LoginType
+}
+// 使用
+if (!LoginType.isThisType(vals.body.type)) {
+    // ....
+}
+```
