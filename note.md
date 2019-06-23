@@ -180,4 +180,26 @@ User.init({
   tableName: 'user' // 重命名
 })
 
+// 保存
+const { User } = require('../../model/user')
+const user = {
+email: v.get('body.email'),
+password: v.get('body.password2'),
+nickname: v.get('body.nickname')
+}
+
+User.create(user)
+// 搜索
+const user = await User.findOne({
+  where: {
+    email
+  }
+})
+
+```
+##### 8. [`bcrypt.js`加密](https://github.com/dcodeIO/bcrypt.js)
+```
+const bcrypt = require('bcryptjs')
+const salt = bcrypt.genSaltSync(10)
+const pwd = bcrypt.hashSync(v.get('body.password2'), salt)
 ```
