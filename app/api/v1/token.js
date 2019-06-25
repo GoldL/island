@@ -14,6 +14,9 @@ const {
 const {
   generateToken
 } = require('../../../core/util')
+const {
+  Auth
+} = require('../../../middlewares/auth')
 
 const router = new Router({
   prefix: '/v1/token'
@@ -40,7 +43,7 @@ router.post('/', async (ctx, next) => {
 
 const emailLogin = async (account, secret) => {
   const user = await User.verifyEmailPassword(account, secret)
-  return token = generateToken(user.id, 2)
+  return token = generateToken(user.id, Auth.USER)
 }
 
 module.exports = router
