@@ -9,17 +9,13 @@ const {
   PositiveIntegerValidator
 } = require('../../validators/validator')
 
-router.post('/v1/:id/classic/latest', async (ctx, next) => {
-  const path = ctx.params
-  const query = ctx.request.query
-  const headers = ctx.request.headers
-  const body = ctx.request.body
+const {
+  Auth 
+} = require('../../../middlewares/auth')
 
-  const v = await new PositiveIntegerValidator().validate(ctx)
-  const id = v.get('path.id')
-  ctx.body = {
-    key: 'classic'
-  }
+
+router.post('/v1/classic/latest', new Auth().m, async (ctx, next) => {
+  ctx.body = ctx.auth.uid
 })
 
 module.exports = router
