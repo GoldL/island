@@ -231,3 +231,50 @@ if (!LoginType.isThisType(vals.body.type)) {
     // ....
 }
 ```
+##### 10. [`jsonwebtoken`](https://github.com/auth0/node-jsonwebtoken) 生成token令牌
+```
+// 生成令牌
+const jwt = require('jsonwebtoken')
+const generateToken = function(uid, scope){
+    const secretKey = global.config.security.secretKey
+    const expiresIn = global.config.security.expiresIn
+    const token = jwt.sign({
+        uid,
+        scope
+    },secretKey,{
+        expiresIn
+    })
+    return token
+}
+
+// 校验令牌
+try {
+    decode = jwt.verify(userToken.name, global.config.security.secretKey)
+  } catch (err) {
+    if (err.name === 'TokenExpiredError') {
+      errMsg = 'token已过期'
+    }
+    throw new global.errs.Forbbiden(errMsg)
+  }
+```
+##### 11. [`basic-auth`携带令牌](https://github.com/jshttp/basic-auth)
+```
+const BasicAuth = require('basic-auth')
+
+class Auth {
+  constructor() {}
+
+  get m() {
+    return async (ctx, next) => {
+      const tokuserTokenen = BasicAuth(ctx.req)
+      if (!userToken || !userToken.name) {
+        throw new global.errs.Forbbiden(errMsg)
+      }
+    }
+  }
+}
+
+module.exports = {
+  Auth
+}
+```
