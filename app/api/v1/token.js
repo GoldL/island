@@ -17,6 +17,9 @@ const {
 const {
   Auth
 } = require('../../../middlewares/auth')
+const {
+  WXManager
+} = require('../../services/wx')
 
 const router = new Router({
   prefix: '/v1/token'
@@ -30,6 +33,7 @@ router.post('/', async (ctx, next) => {
       token = await emailLogin(v.get('body.account'), v.get('body.secret'))
       break
     case LoginType.USER_MINI_PROGRAM:
+      token = await WXManager.codeToToken(v.get('body.account'))
       break
     case LoginType.ADMIN_EMAIL:
       break
