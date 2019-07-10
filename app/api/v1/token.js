@@ -3,7 +3,8 @@ const {
   success
 } = require('../../lib/helper')
 const {
-  TokenValidator
+  TokenValidator,
+  NotEmptyValidate
 } = require('../../validators/validator')
 const {
   LoginType
@@ -42,6 +43,15 @@ router.post('/', async (ctx, next) => {
   }
   ctx.body = {
     token
+  }
+})
+
+router.post('/verify', async (ctx) => {
+  // token
+  const v = await new NotEmptyValidate().validate(ctx)
+  const result = Auth.verifyToken(v.get('body.token'))
+  ctx.body = {
+    result
   }
 })
 
