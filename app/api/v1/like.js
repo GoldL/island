@@ -35,7 +35,7 @@ router.post('/cancel', new Auth().m, async ctx => {
     id: 'artId'
   })
 
-  await Favor.disLike(v.get('body.artId'), v.get('body.type'), ctx.auth.uid)
+  await Favor.dislike(v.get('body.artId'), v.get('body.type'), ctx.auth.uid)
   success()
 })
 
