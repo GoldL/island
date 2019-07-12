@@ -220,6 +220,21 @@ return sequelize.transaction(async t => {
     transaction: t
   })
 })
+// db.js --- 生命scope
+define: {
+    paranoid: true, // 不删除数据库条目,但将新添加的属性deletedAt设置为当前日期(删除完成时)
+    underscored: true, // 将自动设置所有属性的字段参数为下划线命名方式
+    scopes: {
+      bh: {
+        attributes: {
+          exclude: ['updated_at', 'deleted_at', 'created_at']
+        }
+      }
+    },
+}
+// art.js --- 使用scope
+const scope = useScope ? 'bh' : null
+art = await Movie.scope(scope).findOne(finder)
 
 ```
 ##### 8. [`bcrypt.js`加密](https://github.com/dcodeIO/bcrypt.js)
