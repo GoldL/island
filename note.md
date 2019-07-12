@@ -115,6 +115,10 @@ const {
 } = require('../../validators/validator')
 const v = new PositiveIntegerValidator().validate(ctx)
   const id = v.get('path.id')
+// 别名
+const v = await new LikeValidator().validate(ctx, {
+    id: 'artId'
+})
 ```
 ##### 7. [`sequelize`](https://github.com/demopark/sequelize-docs-Zh-CN) 操作数据库
 ```
@@ -195,6 +199,27 @@ const user = await User.findOne({
     email
   }
 })
+// 排序查找
+const flow = await Flow.findOne({
+    order: [
+      ['index', 'DESC']
+    ]
+})
+// 事务
+return sequelize.transaction(async t => {
+  await Favor.create({
+    artId,
+    type,
+    uid
+  }, {
+    transaction: t
+  })
+  const art = await Art.getData(artId, type)
+  await art.increment('fav_nums', {
+    by: 1,
+    transaction: t
+  })
+})
 
 ```
 ##### 8. [`bcrypt.js`加密](https://github.com/dcodeIO/bcrypt.js)
@@ -203,7 +228,7 @@ const bcrypt = require('bcryptjs')
 const salt = bcrypt.genSaltSync(10)
 const pwd = bcrypt.hashSync(v.get('body.password2'), salt)
 ```
-##### 9.js伪枚举类型
+##### 9. js伪枚举类型
 ```
 // enum.js
 function isThisType(val) {
@@ -277,4 +302,21 @@ class Auth {
 module.exports = {
   Auth
 }
+```
+##### 12. [`module-alias`别名](https://github.com/ilearnio/module-alias)
+```
+// package.json
+"_moduleAliases": {
+    "@root"         : ".",
+    "@model": "app/model",
+    "@core": "core",
+    "@middlewares": "middlewares",
+    "@validators": "app/validators",
+    "@services": "app/services",
+    "@lib": "app/lib"
+}
+// app.js
+require('module-alias/register')
+// 使用
+const { User } = require('@model/user')
 ```

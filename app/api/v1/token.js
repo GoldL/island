@@ -1,26 +1,26 @@
 const Router = require('koa-router')
 const {
   success
-} = require('../../lib/helper')
+} = require('@lib/helper')
 const {
   TokenValidator,
   NotEmptyValidate
-} = require('../../validators/validator')
+} = require('@validators/validator')
 const {
   LoginType
-} = require('../../lib/enum')
+} = require('@lib/enum')
 const {
   User
-} = require('../../model/user')
+} = require('@model/user')
 const {
   generateToken
-} = require('../../../core/util')
+} = require('@core/util')
 const {
   Auth
-} = require('../../../middlewares/auth')
+} = require('@middlewares/auth')
 const {
   WXManager
-} = require('../../services/wx')
+} = require('@services/wx')
 
 const router = new Router({
   prefix: '/v1/token'

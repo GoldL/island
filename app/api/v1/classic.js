@@ -4,18 +4,18 @@ const router = new Router({
 })
 const {
   Flow
-} = require('../../model/flow')
+} = require('@model/flow')
 const {
   Favor
-} = require('../../model/favor')
+} = require('@model/favor')
 
 const {
   Auth 
-} = require('../../../middlewares/auth')
+} = require('@middlewares/auth')
 
 const {
   Art
-} = require('../../model/art')
+} = require('@model/art')
 
 router.get('/latest', new Auth().m, async (ctx, next) => {
   const flow = await Flow.findOne({

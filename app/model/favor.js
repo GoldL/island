@@ -1,6 +1,6 @@
 const {
   sequelize
-} = require('../../core/db')
+} = require('@core/db')
 const {
   Sequelize,
   Model

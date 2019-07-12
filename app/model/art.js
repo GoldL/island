@@ -2,7 +2,7 @@ const {
   Movie,
   Sentence,
   Music
-} = require('../model/classic')
+} = require('@model/classic')
 
 class Art {
   static async getData(artId, type) {

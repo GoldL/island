@@ -1,15 +1,15 @@
 const {
   Rule,
   LinValidator
-} = require('../../core/lin-validator-v2')
+} = require('@core/lin-validator-v2')
 
 const {
   User
-} = require('../model/user')
+} = require('@model/user')
 
 const {
   LoginType
-} = require('../lib/enum')
+} = require('@lib/enum')
 class PositiveIntegerValidator extends LinValidator {
   constructor() {
     super()

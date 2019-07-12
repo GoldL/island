@@ -5,7 +5,7 @@ const {
 
 const {
   sequelize
-} = require('../../core/db')
+} = require('@core/db')
 
 const classicFields = {
   image: Sequelize.STRING,
