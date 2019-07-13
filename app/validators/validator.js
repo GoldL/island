@@ -8,7 +8,8 @@ const {
 } = require('@model/user')
 
 const {
-  LoginType
+  LoginType,
+  ArtType
 } = require('@lib/enum')
 class PositiveIntegerValidator extends LinValidator {
   constructor() {
@@ -104,11 +105,14 @@ class NotEmptyValidate extends LinValidator {
   }
 }
 
-function checkType(vals){
-  if(!vals.body.type){
+function checkArtType(vals) {
+  let type = vals.body.type || vals.path.type
+  if (!type) {
       throw new Error('type是必须参数')
   }
-  if(!LoginType.isThisType(vals.body.type)){
+  type = parseInt(type)
+
+  if (!ArtType.isThisType(type)) {
       throw new Error('type参数不合法')
   }
 }
@@ -116,8 +120,12 @@ function checkType(vals){
 class LikeValidator extends PositiveIntegerValidator {
   constructor () {
     super()
-    this.validateType = checkType
+    this.validateType = checkArtType
   }
+}
+
+class ClassicValidator extends LikeValidator {
+
 }
 
 module.exports = {
@@ -125,5 +133,6 @@ module.exports = {
   RegisterValidator,
   TokenValidator,
   NotEmptyValidate,
-  LikeValidator
+  LikeValidator,
+  ClassicValidator
 }
