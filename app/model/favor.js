@@ -3,7 +3,8 @@ const {
 } = require('@core/db')
 const {
   Sequelize,
-  Model
+  Model,
+  Op
 } = require('sequelize')
 const {
   Art
@@ -30,7 +31,7 @@ class Favor extends Model {
         transaction: t
       })
       const art = await Art.getData(artId, type, false)
-      await art.increment('fav_nums', {
+      await art.increment('favNums', {
         by: 1,
         transaction: t
       })
@@ -54,7 +55,7 @@ class Favor extends Model {
         transaction: t
       })
       const art = await Art.getData(artId, type, false)
-      await art.decrement('fav_nums', {
+      await art.decrement('favNums', {
         by: 1,
         transaction: t
       })
@@ -70,6 +71,21 @@ class Favor extends Model {
       }
     })
     return favor ? true : false
+  }
+
+  static async getMyClassicFavors(uid) {
+    const arts = await Favor.findAll({
+      where:{
+        uid,
+        type: {
+          [Op.not]: 400
+        }
+      }
+    })
+    if (!arts) {
+      throw new global.errs.NotFound()
+    }
+    return await Art.getList(arts)
   }
 }
 

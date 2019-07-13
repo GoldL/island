@@ -235,6 +235,23 @@ define: {
 // art.js --- 使用scope
 const scope = useScope ? 'bh' : null
 art = await Movie.scope(scope).findOne(finder)
+// 排除查找
+const arts = await Favor.findAll({
+  where:{
+    uid,
+    type: {
+      [Op.not]: 400
+    }
+  }
+})
+// 多查询in
+Movie.scope(scope).findAll({
+  where: {
+    id: {
+      [Op.in]: ids
+    }
+  }
+})
 
 ```
 ##### 8. [`bcrypt.js`加密](https://github.com/dcodeIO/bcrypt.js)

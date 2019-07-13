@@ -85,9 +85,14 @@ router.get('/:type/:id/favor', new Auth().m, async ctx => {
   }
   const like = await Favor.userLikeIt(id, type, ctx.auth.uid)
   ctx.body = {
-    favNums: art.fav_nums,
+    favNums: art.favNums,
     likeStatus: like
   }
+})
+
+router.get('/favor', new Auth().m, async ctx => {
+  const uid = ctx.auth.uid
+  ctx.body = await Favor.getMyClassicFavors(uid)
 })
 
 module.exports = router
