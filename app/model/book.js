@@ -10,13 +10,17 @@ const {
   Model
 } = require('sequelize')
 
+const {
+  Favor
+} = require('@model/favor')
+
 class Book extends Model {
   constructor(id) {
     super()
     this.id = id
   }
 
-  async detail () {
+  async detail() {
     const url = util.format(global.config.yushu.detailUrl, this.id)
     const detail = await axios.get(url)
     return detail.data
@@ -24,10 +28,20 @@ class Book extends Model {
 
   static async searchFromYuShu(q, start, count, summary = 1) {
     const url = util.format(
-        global.config.yushu.keywordUrl, encodeURI(q), count, start, summary)
+      global.config.yushu.keywordUrl, encodeURI(q), count, start, summary)
     const result = await axios.get(url)
     return result.data
-}
+  }
+
+  static async getMyFavorBookCount(uid) {
+    const count = await Favor.count({
+      where: {
+        type: 400,
+        uid
+      }
+    })
+    return count
+  }
 }
 
 Book.init({
@@ -41,7 +55,7 @@ Book.init({
   }
 }, {
   sequelize,
-    tableName: 'book'
+  tableName: 'book'
 })
 
 module.exports = {
