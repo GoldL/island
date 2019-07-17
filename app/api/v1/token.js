@@ -5,7 +5,7 @@ const {
 const {
   TokenValidator,
   NotEmptyValidate
-} = require('@validators/validator')
+} = require('@validator')
 const {
   LoginType
 } = require('@lib/enum')

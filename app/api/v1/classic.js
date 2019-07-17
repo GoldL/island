@@ -20,7 +20,7 @@ const {
 const {
   PositiveIntegerValidator,
   ClassicValidator
-} = require('@validators/validator')
+} = require('@validator')
 
 router.get('/latest', new Auth().m, async (ctx, next) => {
   const flow = await Flow.findOne({

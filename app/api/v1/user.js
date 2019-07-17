@@ -4,7 +4,7 @@ const { User } = require('@model/user')
 
 const { success } = require('@lib/helper')
 
-const { RegisterValidator } = require('@validators/validator')
+const { RegisterValidator } = require('@validator')
 
 const router = new Router({
   prefix: '/v1/user'

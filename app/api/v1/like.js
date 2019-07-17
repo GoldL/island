@@ -6,7 +6,7 @@ const {
 
 const {
   LikeValidator
-} = require('@validators/validator')
+} = require('@validator')
 
 const {
   Auth

@@ -32,7 +32,7 @@
     "@model": "app/model",
     "@core": "core",
     "@middlewares": "middlewares",
-    "@validators": "app/validators",
+    "@validator": "app/validators/validator.js",
     "@services": "app/services",
     "@lib": "app/lib"
   }
