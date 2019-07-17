@@ -13,6 +13,28 @@ const {
 } = require('@model/classic')
 
 class Art {
+
+  constructor(artId, type) {
+    this.artId = artId
+    this.type = type
+  }
+
+  async getDetail(uid) {
+    const {
+      Favor
+    } = require('@model/favor')
+    
+    const art = await Art.getData(this.artId, this.type)
+    if (!art) {
+      throw new global.errs.NotFound()
+    }
+    const like = await Favor.userLikeIt(this.artId, this.type, uid)
+    return {
+      art: art,
+      likeStatus: like
+    }
+  }
+
   static async getList(artInfoList) {
     const artInfoObj = {
       100: [],

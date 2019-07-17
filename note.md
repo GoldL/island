@@ -352,3 +352,27 @@ require('module-alias/register')
 // 使用
 const { User } = require('@model/user')
 ```
+##### 13.避免循环导入
+```
+favor.js 导入 art.js
+art.js 导入 favor.js
+导致
+TypeError: Cannot read property 'userLikeIt' of undefined
+  at Art.getDetail
+// 解决办法，局部引入
+async getDetail(uid) {
+    const {
+      Favor
+    } = require('@model/favor')
+    
+    const art = await Art.getData(this.artId, this.type)
+    if (!art) {
+      throw new global.errs.NotFound()
+    }
+    const like = await Favor.userLikeIt(this.artId, this.type, uid)
+    return {
+      art: art,
+      likeStatus: like
+    }
+}
+```
