@@ -2,8 +2,13 @@ const Router = require('koa-router')
 
 const {
   SearchValidator,
-  PositiveIntegerValidator
+  PositiveIntegerValidator,
+  AddShortCommentValidator
 } = require('@validator')
+
+const {
+  success
+} = require('@lib/helper')
 
 const {
   Auth
@@ -20,6 +25,10 @@ const {
 const {
   Favor
 } = require('@model/favor')
+
+const {
+  Comment
+} = require('@model/book-comment')
 
 const router = new Router({
   prefix: '/v1/book'
@@ -57,6 +66,37 @@ router.get('/:bookId/favor', new Auth().m, async ctx => {
   const favor = await Favor.getBookFavor(
     ctx.auth.uid, v.get('path.bookId'))
   ctx.body = favor
+})
+
+router.post('/add/short_comment', new Auth().m, async ctx => {
+  const v = await new AddShortCommentValidator().validate(ctx, {
+    id: 'bookId'
+  })
+
+  await Comment.addComment(v.get('body.bookId'), v.get('body.content'))
+  success()
+})
+
+router.get('/:bookId/short_comment', new Auth().m, async ctx => {
+  const v = await new PositiveIntegerValidator().validate(ctx, {
+    id: 'bookId'
+  })
+  const comments = await Comment.getComments(v.get('path.bookId'))
+  ctx.body = comments
+})
+
+router.get('/hot_keyword', async ctx => {
+  ctx.body = {
+    'hot': ['Python',
+      '哈利·波特',
+      '村上春树',
+      '东野圭吾',
+      '白夜行',
+      '韩寒',
+      '金庸',
+      '王小波'
+    ]
+  }
 })
 
 module.exports = router
