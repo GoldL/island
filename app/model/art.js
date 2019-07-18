@@ -23,7 +23,7 @@ class Art {
     const {
       Favor
     } = require('@model/favor')
-    
+
     const art = await Art.getData(this.artId, this.type)
     if (!art) {
       throw new global.errs.NotFound()
@@ -101,6 +101,15 @@ class Art {
       case 300:
         art = await Sentence.scope(scope).findOne(finder)
       case 400:
+        const {
+          Book
+        } = require('@model/book')
+        art = await Book.scope(scope).findOne(finder)
+        if (!art) {
+          art = await Book.create({
+            id: artId
+          })
+        }
         break
       default:
         break

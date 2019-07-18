@@ -41,7 +41,7 @@ router.get('/hot_list', async ctx => {
 
 router.get('/:id/detail', async ctx => {
   const v = await new PositiveIntegerValidator().validate(ctx)
-  const book = await new Book(v.get('path.id')).detail()
+  const book = await Book.detail(v.get('path.id'))
   ctx.body = book
 })
 
@@ -81,8 +81,12 @@ router.get('/:bookId/short_comment', new Auth().m, async ctx => {
   const v = await new PositiveIntegerValidator().validate(ctx, {
     id: 'bookId'
   })
-  const comments = await Comment.getComments(v.get('path.bookId'))
-  ctx.body = comments
+  const bookId = v.get('path.bookId')
+  const comments = await Comment.getComments(bookId)
+  ctx.body = {
+    comments: comments,
+    bookId
+  }
 })
 
 router.get('/hot_keyword', async ctx => {
