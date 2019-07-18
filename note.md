@@ -376,3 +376,40 @@ async getDetail(uid) {
     }
 }
 ```
+##### 14.JSON序列化
+```
+// 1、每个model中通过toJSON控制
+class Comment extends Model {
+  toJSON() {
+    return {
+      content: this.getDataValue('content'),
+      nums: this.getDataValue('nums')
+    }
+  }
+}
+// 2、在基类中强行加上toJSON， db.js
+const {
+  unset,
+  clone
+} = require('lodash')
+const {
+  Sequelize,
+  Model
+} = require('sequelize')Ï
+Model.prototype.toJSON = function () {
+  let data = clone(this.dataValues)
+
+  unset(data, 'updatedAt')
+  unset(data, 'createdAt')
+  unset(data, 'deletedAt')
+
+  return data
+}
+```
+##### 15. [`koa-static`](https://www.npmjs.com/package/koa-static)静态资源加载
+```
+// app.js
+const path = require('path')
+const static = require('koa-static')
+app.use(static(path.join(__dirname, './static')))
+```
