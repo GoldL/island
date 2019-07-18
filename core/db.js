@@ -1,4 +1,11 @@
-const Sequelize = require('sequelize')
+const {
+  unset,
+  clone
+} = require('lodash')
+const {
+  Sequelize,
+  Model
+} = require('sequelize')
 const {
   dbName,
   host,
@@ -18,7 +25,7 @@ const sequelize = new Sequelize(dbName, user, password, {
     scopes: {
       bh: {
         attributes: {
-          exclude: ['updated_at', 'deleted_at', 'created_at']
+          exclude: ['updatedAt', 'deletedAt', 'createdAt']
         }
       }
     },
@@ -30,6 +37,16 @@ sequelize.sync(
   //   force: true // 自动删除原来表，重新创建新的表
   // }
 )
+
+Model.prototype.toJSON = function () {
+  let data = clone(this.dataValues)
+
+  unset(data, 'updatedAt')
+  unset(data, 'createdAt')
+  unset(data, 'deletedAt')
+
+  return data
+}
 
 module.exports = {
   sequelize
