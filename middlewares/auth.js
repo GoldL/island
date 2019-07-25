@@ -11,6 +11,18 @@ class Auth {
 
   get m() {
     return async (ctx, next) => {
+
+      // 做特殊处理,前端开发前期只要query携带appKey就默认
+      if (ctx.request.query.appKey) {
+        ctx.auth = {
+          uid: 1,
+          scope: Auth.SUPER_ADMIN
+        }
+        await next()
+        return
+      }
+      
+      // 正常流程
       const userToken = BasicAuth(ctx.req)
       let errMsg = 'token不合法'
       let decode = {}
