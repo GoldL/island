@@ -75,6 +75,7 @@ class Art {
         break
       case 300:
         arts = await Sentence.scope(scope).findAll(finder)
+        break
       case 400:
         break
       default:
@@ -100,6 +101,7 @@ class Art {
         break
       case 300:
         art = await Sentence.scope(scope).findOne(finder)
+        break
       case 400:
         const {
           Book
