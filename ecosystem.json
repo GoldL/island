@@ -14,7 +14,7 @@
   "deploy": {
     "production": {
       "user": "manager",
-      "host": ["129.211.44.134"],
+      "host": ["120.26.75.227"],
       "port": "39999",
       "ref": "origin/master",
       "repo": "git@gitee.com:iGolden/island.git",
